@@ -1,8 +1,9 @@
 // Express server
 
 import express from 'express';
-const app = express();
 import index from './routes/index';
+
+const app = express();
 
 const port = process.env.PORT || 5000;
 
