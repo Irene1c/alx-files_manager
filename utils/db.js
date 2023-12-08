@@ -20,6 +20,16 @@ class DBClient {
     return this.client.db().collection('users').countDocuments();
   }
 
+  // saving a new user in the collection `users`
+  async saveUser(user) {
+    return this.client.db().collection('users').insertOne(user);
+  }
+
+  // finding if an `email` exists in `users` collection
+  async findEmail(email) {
+    return this.client.db().collection('users').findOne({ email });
+  }
+
   async nbFiles() {
     return this.client.db().collection('files').countDocuments();
   }
