@@ -18,7 +18,7 @@ const postNew = async (req, res) => {
   // Hash the password using SHA-1
   const hashedPassword = crypto.createHash('sha1').update(password).digest('hex');
 
-  if (await dbClient.findEmail(email)) {
+  if (await dbClient.findUser(email)) {
     return res.status(400).json({ error: 'Already exist' });
   }
 
@@ -35,4 +35,6 @@ const postNew = async (req, res) => {
   }
 };
 
-export default postNew;
+export default {
+  postNew,
+}

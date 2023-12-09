@@ -25,9 +25,9 @@ class DBClient {
     return this.client.db().collection('users').insertOne(user);
   }
 
-  // finding if an `email` exists in `users` collection
-  async findEmail(email) {
-    return this.client.db().collection('users').findOne({ email });
+  // find if a `user` exists in `users` collection
+  async findUser(credentials) {
+    return this.client.db().collection('users').findOne({ credentials });
   }
 
   async nbFiles() {

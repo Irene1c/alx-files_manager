@@ -9,13 +9,9 @@ const getStatus = (req, res) => {
   );
 };
 
-const getStats = (req, res) => {
-  (async () => {
-    res.status(200).json(
-      { users: await dbClient.nbUsers(), files: await dbClient.nbFiles() },
-    );
-  })();
-};
+const getStats = async (req, res) => res.status(200).json(
+  { users: await dbClient.nbUsers(), files: await dbClient.nbFiles() },
+);
 
 export default {
   getStatus,
