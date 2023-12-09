@@ -2,6 +2,7 @@
 
 import crypto from 'crypto';
 import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
 
 const postNew = async (req, res) => {
   const { email } = req.body;
@@ -35,6 +36,28 @@ const postNew = async (req, res) => {
   }
 };
 
+const getMe = async (req, res) => {
+  const token = req.header('X-Token');
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized: Token missing' });
+  }
+
+  try {
+    const userId = await redisClient.get(`auth_${token}`);
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    const user = await dbClient.getUser(userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized: User not found' });
+    }
+    return res.json({ id: userId, email: user.email });
+  } catch (err) {
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 export default {
   postNew,
-}
+  getMe,
+};

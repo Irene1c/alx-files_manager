@@ -1,6 +1,6 @@
 // MongoDB utils
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 class DBClient {
   constructor() {
@@ -26,8 +26,17 @@ class DBClient {
   }
 
   // find if a `user` exists in `users` collection
-  async findUser(credentials) {
-    return this.client.db().collection('users').findOne({ credentials });
+  async findUser(email, hashedPassword = null) {
+    if (hashedPassword) {
+      return this.client.db().collection('users').findOne({ email, password: hashedPassword });
+    }
+    return this.client.db().collection('users').findOne({ email });
+  }
+
+  // get use by 'id'
+  async getUser(userId) {
+    const user = this.client.db().collection('users').findOne({ _id: new ObjectId(userId) });
+    return user;
   }
 
   async nbFiles() {
