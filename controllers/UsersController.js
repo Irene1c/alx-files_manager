@@ -39,7 +39,7 @@ const postNew = async (req, res) => {
 const getMe = async (req, res) => {
   const token = req.header('X-Token');
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized: Token missing' });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {

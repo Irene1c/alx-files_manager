@@ -1,4 +1,5 @@
 // Authenticate a user
+
 import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 import redisClient from '../utils/redis';
@@ -8,7 +9,7 @@ const getConnect = async (req, res) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Basic ')) {
-    return res.status(401).json({ error: 'Missing Authorization header' });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const base64Encoded = authHeader.slice('Basic '.length);
